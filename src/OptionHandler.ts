@@ -23,6 +23,9 @@ export class OptionHandler {
     }
 
     public groupCombinations(combinations: Combination[]): Row[] {
+        if (!combinations.length) {
+            return []
+        }
         combinations.sort(this.compareCombination)
 
         let result: OptionCombinations = {};
@@ -33,38 +36,134 @@ export class OptionHandler {
             })
         })
 
-        const optionRows = this.removeFalseCombinations(
-            this.removeFalseAllElements(
-                this.mergeOptionCombinations(result)
-            )
-        )
-
         let rows = this.mergeRows(
             this.removeRowsWithEmptyOptionItem(
                 this.removeDuplicatedFindAll(
                     this.convertOptionRowsToRows(
-                        optionRows
+                        this.removeFalseCombinations(
+                            this.removeFalseAllElements(
+                                this.mergeOptionCombinations(result)
+                            )
+                        )
                     )
                 )
             )
         )
 
-        if (this.hasNonAllRowItemWithManyKeys(rows)) {
+        if (this.hasIncompleteAllRows(rows)) {
+            rows = this.splitIncompleteAllRows(rows)
+        }
 
+        return this.tryToMergeRowsWithAll(rows)
+    }
+
+    private splitIncompleteAllRows(rows: Row[]): Row[] {
+        let finalRows: Row[] = []
+
+        for (const row of rows) {
+            if (!this.hasIncompleteAll(row)) {
+                finalRows.push(row)
+                continue
+            }
+
+            finalRows = finalRows.concat(this.splitIncompleteRow(row))
+        }
+
+        return finalRows
+    }
+
+    private splitIncompleteRow(row: Row): Row[] {
+        const rows: Row[] = []
+
+        Object.keys(row).map((optionKey) => {
+            if (row[optionKey].isAll || row[optionKey].keys.length === 1) {
+                return
+            }
+
+            row[optionKey].keys.map((key) => {
+                const clonedRow = JSON.parse(JSON.stringify(row))
+                clonedRow[optionKey].keys = [key]
+                rows.push(clonedRow)
+            })
+        })
+
+        return rows
+    }
+
+    private hasIncompleteAllRows(rows: Row[]): boolean {
+        for (const row of rows) {
+            if (this.hasIncompleteAll(row)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private hasIncompleteAll(row: Row): boolean {
+        for (const optionKey of this.optionKeys) {
+            if (!row[optionKey].isAll && row[optionKey].keys.length > 1) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private tryToMergeRowsWithAll(rows: Row[]): Row[] {
+        let i = 0;
+
+        while (i < rows.length) {
+            const row = rows[i]
+            if (this.countTotalAllOption(row) === this.optionKeys.length - 1) {
+
+                let noAllOptionKey = ''
+
+                for (const optionKey of this.optionKeys) {
+                    if (!row[optionKey].isAll) {
+                        noAllOptionKey = optionKey
+                        break
+                    }
+                }
+
+                const mergedRow = JSON.parse(JSON.stringify(row))
+
+                const indexToRemove: number[] = []
+
+                for (const [j, rowB] of rows.entries()) {
+                    if (i === j || !this.rowHasAll(rowB)) {
+                        continue
+                    }
+
+                    if (this.hasEqualAll(row, rowB, noAllOptionKey)) {
+                        mergedRow[noAllOptionKey].keys = mergedRow[noAllOptionKey].keys.concat(rowB[noAllOptionKey].keys)
+                        indexToRemove.push(j)
+
+                        if (mergedRow[noAllOptionKey].keys.length === Object.keys(this.options[noAllOptionKey]).length) {
+                            mergedRow[noAllOptionKey].isAll = true
+                            break
+                        }
+                    }
+                }
+                if (this.countTotalAllOption(mergedRow) > this.countTotalAllOption(rows[i])) {
+                    rows[i] = mergedRow
+
+                    rows = rows.filter((row, index) => {
+                        return !indexToRemove.includes(index)
+                    })
+                }
+            }
+            i++
         }
 
         return rows
     }
 
-    private hasNonAllRowItemWithManyKeys(rows: Row[]): boolean {
-        for (const row of rows) {
-            for (const optionKey of this.optionKeys) {
-                if (!row[optionKey].isAll && row[optionKey].keys.length > 1) {
-                    return true
-                }
+    private countTotalAllOption(row: Row): number {
+        return this.optionKeys.reduce((total, optionKey) => {
+            if (row[optionKey].isAll) {
+                total++
             }
-        }
-        return false
+            return total
+        }, 0)
     }
 
     private removeFalseCombinations(optionRows: OptionRows): OptionRows {
@@ -379,8 +478,8 @@ export class OptionHandler {
                 continue
             }
 
-            if (!(
-                rowA[optionKey].isAll === rowB[optionKey].isAll)
+            if (
+                rowA[optionKey].isAll !== rowB[optionKey].isAll
             ) {
                 return false
             }

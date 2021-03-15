@@ -1,7 +1,6 @@
 import {OptionHandler} from "../../src/OptionHandler";
-import {Combination} from "../../src/types";
 
-const options = require('../data/option.json')
+const options = require('./../data/option.json')
 
 const optionHandler = new OptionHandler(options);
 
@@ -15,15 +14,49 @@ describe('generateAllPossibleCombinations', () => {
 })
 
 describe('groupCombinations', () => {
-    it('case1 - should return 5 rows', () => {
-        const testData = require('../data/case1.json')
-        const combinations: Combination[] = testData.combinations;
+    const testCases = [
+        {
+            name: 'case1',
+            expectedLength: 5
+        },
+        {
+            name: 'case2',
+            expectedLength: 1
+        },
+        {
+            name: 'case3',
+            expectedLength: 5
+        },
+        {
+            name: 'case4',
+            expectedLength: 1
+        },
+        {
+            name: 'case5',
+            expectedLength: 1
+        },
+        {
+            name: 'case6',
+            expectedLength: 2
+        },
+        {
+            name: 'case7',
+            expectedLength: 1
+        },
+        {
+            name: 'case8',
+            expectedLength: 0
+        }
+    ]
 
-        const rows = optionHandler.groupCombinations(combinations)
+    for (const testCase of testCases) {
+        it(`${testCase.name}`, () => {
+            const testData = require(`../data/${testCase.name}.json`)
 
-        expect(rows.length).toEqual(5)
-        expect(rows).toStrictEqual(testData.rows)
-    })
+            const rows = optionHandler.groupCombinations(testData.combinations)
 
-
+            expect(rows.length).toEqual(testCase.expectedLength)
+            expect(rows).toStrictEqual(testData.rows)
+        })
+    }
 })
