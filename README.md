@@ -1,12 +1,13 @@
 # options-combinations-handler
-###The Problem
+### The Problem
+
 In a UI where the user can combine several options in rows, the user may want to simplify the rows that have combinations that have all of one or more options.
 
 Ex:
 
 In a clothes store, you may have some t-shirt options that the user can combine to generate variations rows:
 
-######options
+###### options
 ``` json
 [
     {
@@ -28,7 +29,7 @@ In a clothes store, you may have some t-shirt options that the user can combine 
 ]
 ```
 
-######suboptions
+###### suboptions
 ```json
 {
     "D": {"d1": "stamp", "d2": "stripes", "d3": "smooth"},
@@ -37,7 +38,7 @@ In a clothes store, you may have some t-shirt options that the user can combine 
     "C": {"c1": "short", "c2": "long", "c3": "medium"}
 }
 ```
-######variations rows:
+###### variations rows:
 
 | texture | color | size | sleeve |
 |---------|-------|------|--------|
