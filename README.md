@@ -59,7 +59,10 @@ In the same way, if exists all possible combinations you may want to show the re
 |---------|-------|------|--------|
 | all     | all   | all  | all    |
 
-check tests for more examples
+check tests for more examples.
+
+The present code is a quick solution to this problem, it may need improvements... 
+If you found this useful or you want to help I'm open to PRs
 
 (The MIT License)
 
