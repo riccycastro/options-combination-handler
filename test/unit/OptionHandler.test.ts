@@ -1,4 +1,4 @@
-import {OptionHandler} from "../../src/OptionHandler";
+import {OptionHandler} from "../../index";
 
 const options = require('./../data/option.json')
 
