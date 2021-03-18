@@ -1,6 +1,6 @@
 {
   "name": "options-combination-handler",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "The purpose of this package is to handle option combinations, merge them to make it easier and clearest to show them",
   "main": "lib/src/OptionHandler.js",
   "types": "lib/src/OptionHandler.d.ts",
