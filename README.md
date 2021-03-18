@@ -1,4 +1,4 @@
-# options-combinations-handler
+# options-combination-handler
 ### The Problem
 
 In a UI where the user can combine several options in rows, the user may want to simplify the rows that have combinations that have all of one or more options.
