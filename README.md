@@ -1,4 +1,4 @@
-# options-combinations-handler
+# options-combination-handler
 ### The Problem
 
 In a UI where a user can combine several options in variants, the user may want to simplify the variations that have combinations that have all of one or more options.
