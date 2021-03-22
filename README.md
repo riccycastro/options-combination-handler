@@ -16,15 +16,15 @@ In a clothes store, you may have some t-shirt options that the user can combine 
         "suboptions": [
             {
                 "id": "d1",
-                "name: "stamp"
+                "name": "stamp"
             },
             {
                 "id": "d2",
-                "name: "stripes"
+                "name": "stripes"
             },
             {
                 "id": "d3",
-                "name: "smooth"
+                "name": "smooth"
             }
         ]
     },
@@ -34,15 +34,15 @@ In a clothes store, you may have some t-shirt options that the user can combine 
         "suboptions": [
             {
                 "id": "a1",
-                "name: "blue"
+                "name": "blue"
             },
             {
                 "id": "a2",
-                "name: "red"
+                "name": "red"
             },
             {
                 "id": "a3",
-                "name: "green"
+                "name": "green"
             }
         ]
     },
@@ -52,23 +52,23 @@ In a clothes store, you may have some t-shirt options that the user can combine 
         "suboptions": [
             {
                 "id": "b1",
-                "name: "xs"
+                "name": "xs"
             },
             {
                 "id": "b2",
-                "name: "s"
+                "name": "s"
             },
             {
                 "id": "b3",
-                "name: "m"
+                "name": "m"
             },
             {
                 "id": "b4",
-                "name: "l"
+                "name": "l"
             },
             {
                 "id": "b5",
-                "name: "xl"
+                "name": "xl"
             }
         ]
     },
@@ -78,15 +78,15 @@ In a clothes store, you may have some t-shirt options that the user can combine 
         "suboptions": [
             {
                 "id": "c1",
-                "name: "short"
+                "name": "short"
             },
             {
                 "id": "c2",
-                "name: "long"
+                "name": "long"
             },
             {
                 "id": "c3",
-                "name: "medium"
+                "name": "medium"
             }
         ]
     }
