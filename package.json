@@ -1,12 +1,12 @@
 {
   "name": "options-combination-handler",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "The purpose of this package is to handle option combinations, merge them to make it easier and clearest to show them",
   "main": "lib/src/OptionHandler.js",
   "types": "lib/src/OptionHandler.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/riccycastro/options-combinations-handler"
+    "url": "https://github.com/riccycastro/options-combination-handler"
   },
   "scripts": {
     "start": "npx tsc index.ts",

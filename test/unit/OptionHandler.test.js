@@ -49,7 +49,7 @@ describe('groupCombinations', () => {
     for (const testCase of testCases) {
         it(`${testCase.name}`, () => {
             const testData = require(`../data/${testCase.name}.json`);
-            const rows = optionHandler.groupCombinations(testData.combinations);
+            const rows = optionHandler.convertCombinationsToRows(testData.combinations);
             expect(rows.length).toEqual(testCase.expectedLength);
             expect(rows).toStrictEqual(testData.rows);
         });

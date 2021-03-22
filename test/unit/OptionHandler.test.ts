@@ -1,6 +1,6 @@
 import {OptionHandler} from "../../index";
 
-const options = require('./../data/option.json')
+const options = require('./../data/options.json')
 
 const optionHandler = new OptionHandler(options);
 
@@ -13,50 +13,30 @@ describe('generateAllPossibleCombinations', () => {
     })
 })
 
-describe('groupCombinations', () => {
-    const testCases = [
-        {
-            name: 'case1',
-            expectedLength: 5
-        },
-        {
-            name: 'case2',
-            expectedLength: 1
-        },
-        {
-            name: 'case3',
-            expectedLength: 5
-        },
-        {
-            name: 'case4',
-            expectedLength: 1
-        },
-        {
-            name: 'case5',
-            expectedLength: 1
-        },
-        {
-            name: 'case6',
-            expectedLength: 2
-        },
-        {
-            name: 'case7',
-            expectedLength: 1
-        },
-        {
-            name: 'case8',
-            expectedLength: 0
-        }
-    ]
+describe('convertCombinationsToRows', () => {
+    const testsData = require('../data/convertCombinationsToRows.json')
 
-    for (const testCase of testCases) {
-        it(`${testCase.name}`, () => {
-            const testData = require(`../data/${testCase.name}.json`)
-
-            const rows = optionHandler.groupCombinations(testData.combinations)
-
-            expect(rows.length).toEqual(testCase.expectedLength)
+    Object.keys(testsData).map((testCase) => {
+        const testData = testsData[testCase]
+        const description = testData.description || ''
+        
+        it(`${testCase} ${description}`, () => {
+            const rows = optionHandler.convertCombinationsToRows(testData.combinations)
             expect(rows).toStrictEqual(testData.rows)
         })
-    }
+    })
+})
+
+describe('convertRowsToCombinations', () => {
+    const testsData = require('../data/convertRowsToCombinations.json')
+
+    Object.keys(testsData).map((testCase) => {
+        const testData = testsData[testCase]
+        const description = testData.description || ''
+
+        it(`${testCase} ${description}`, () => {
+            const combinations = optionHandler.convertRowsToCombinations(testData.rows)
+            expect(combinations).toStrictEqual(testData.combinations)
+        })
+    })
 })

@@ -1,9 +1,5 @@
-interface OptionItem {
-    [k: string]: string
-}
-
 export interface Option {
-    [k: string]: OptionItem
+    [k: string]: string[]
 }
 
 export interface Combination {
